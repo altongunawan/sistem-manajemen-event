@@ -7,6 +7,13 @@
     <title>Dashboard</title>
 </head>
 <body>
+
+        {{-- Response Feedback --}}
+        @if (Session::has('failed'))
+            <div>{{ Session::get('failed') }}</div>
+        @endif
+        {{-- End Response Feedback --}}
+
     <table style="text-align: center;">
         <thead>
             <tr>

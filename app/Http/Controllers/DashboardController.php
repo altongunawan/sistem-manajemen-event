@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Session;
 
 class DashboardController extends Controller
 {
@@ -13,15 +12,16 @@ class DashboardController extends Controller
         // Get Session from previous Login
 
         $data = array();
-        if(Session::has('loginId')){
-            $data = User::where('id','=',Session::get('loginId'))->first();
+        if(session()->has('loginId')){
+            
+            $data = User::where('id','=',session()->get('loginId'))->first();
+            
+            // BACKUP
+            // return view('dashboard',[
+            //     'data' => $data,
+            // ]);
+
+            return view('dashboard', compact('data'));
         }
-        
-        // return view('dashboard',[
-        //     'data' => $data,
-        // ]);
-
-        return view('dashboard', compact('data'));
-
     }
 }

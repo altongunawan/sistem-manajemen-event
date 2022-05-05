@@ -19,10 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login',[AuthController::class,'login'])->name('login');
-Route::get('/register',[AuthController::class,'register'])->name('register');
+Route::get('/login',[AuthController::class,'login'])->name('login')->middleware('loggedIn');
+Route::get('/register',[AuthController::class,'register'])->name('register')->middleware('loggedIn');
+
 Route::post('/register', [AuthController::class,'registerUser'])->name('registerUser');
 Route::post('/login', [AuthController::class,'loginUser'])->name('loginUser');
+
 Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 
-Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard')->middleware("authCheck");

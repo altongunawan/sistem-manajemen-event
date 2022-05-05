@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Session;
 use Hash;
 
 class AuthController extends Controller
@@ -45,7 +44,7 @@ class AuthController extends Controller
     
     public function loginUser(Request $request){
         // Validate First
-        $request->validate([
+        $credentials=$request->validate([
             'email' => 'required|email',
             'password' => 'required|min:5',
         ]);
@@ -61,7 +60,7 @@ class AuthController extends Controller
             // Check Password
             if(Hash::check($request->password, $user->password)){
                 $request->session()->put('loginId', $user->id);
-                return redirect('dashboard');
+                return redirect()->intended('dashboard');
             }else{
                 return redirect()->back()->with('failed','Email & Password mismatch!');
             }
@@ -73,9 +72,9 @@ class AuthController extends Controller
 
     public function logout(){
         // Delete session
-        if (Session::has('loginId')) {
-            Session::pull('loginId');
-            return redirect('login');
+        if (session()->has('loginId')) {
+            session()->pull('loginId');
+            return redirect('login')->with('success','Successfully Logged Out');
         }
     }
 }
