@@ -24,7 +24,12 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:5',
+            'confirmPassword' => 'required|min:5',
         ]);
+
+        if ($request->password != $request->confirmPassword) {
+            return redirect()->back()->with('failed',"password doesn't match !");
+        }
 
         // Pass Validation , Then Save to DB ->
 
@@ -36,12 +41,12 @@ class AuthController extends Controller
 
         // Check if any added data to DB ->
         if ($res) {
-            return redirect()->back()->with('success','User Registered Successfully!');
+            return redirect()->back()->with('success','Account Registered , Please Login with this account!');
         }else {
-            return redirect()->back()->with('failed','Something Went Wrong!');
+            return redirect()->back()->with('failed','Registration failed , Something Went Wrong!');
         }
     }
-    
+
     public function loginUser(Request $request){
         // Validate First
         $credentials=$request->validate([
@@ -67,7 +72,7 @@ class AuthController extends Controller
         } else {
             return redirect()->back()->with('failed','Email not registered!');
         }
-        
+
     }
 
     public function logout(){

@@ -1,60 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Page</title>
-</head>
-<body>
-    <form action="{{ route('loginUser') }}" method="post">
-        @csrf
+@include('layouts/header')
 
-        {{-- Response Feedback --}}
-        @if (Session::has('success'))
-            <div>{{ Session::get('success') }}</div>
-        @endif
-        @if (Session::has('failed'))
-            <div>{{ Session::get('failed') }}</div>
-        @endif
-        {{-- End Response Feedback --}}
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col h-100">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <div class="card border-0" style="width: 335px">
+                    <h3 class="fs-montserrat-md main-text-color mb-4">Log In</h3>
+                    <form action="{{ route('loginUser') }}" method="post" class="mb-3">
+                        @csrf
 
-        <table>
-            <thead>
-                <tr>
-                    <td colspan="3" style="text-align: center;">
-                        LOGIN
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><label for="email">Email</label></td>
-                    <td> : </td>
-                    <td><input type="text" name="email" id="email" required value="{{ old('email') }}">
-                    @error('email')
-                        {{ $message }}
-                    @enderror
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="password">Password</label></td>
-                    <td> : </td>
-                    <td><input type="password" name="password" id="password" required>
-                    @error('password')
-                        {{ $message }}
-                    @enderror
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="text-align: center;">
-                        <button type="submit"> Login !</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
-    </form>
-    <a href="{{ route('register') }}"> Don't Have Account? Register Now!</a>
-</body>
-</html>
+                        {{-- Response Feedback --}}
+                        @if (Session::has('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+                        @if (Session::has('failed'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ Session::get('failed') }}
+                            </div>
+                        @endif
+                        {{-- End Response Feedback --}}
+
+                        <div class="mb-3">
+                            <label style="font-size: 14px" class="fs-montserrat-md mb-1" for="email">Email</label>
+                            <input class="form-control fs-montserrat-li px-4" style="padding: 12px; font-size: 14px; border-radius: 10px" type="email" name="email" id="email" placeholder="Enter your email">
+                            @error('email')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label style="font-size: 14px" class="fs-montserrat-md mb-1" for="password">Password</label>
+                            <input class="form-control fs-montserrat-li px-4" style="padding: 12px; font-size: 14px; letter-spacing: 2px; border-radius: 10px;" type="password"  name="password" id="password" required placeholder="••••••••">
+                            @error('password')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                             @enderror
+                        </div>
+
+                        <div class="mb-3 float-end">
+                            <a class="main-text-color fs-montserrat-md text-decoration-none" style="font-size: 12.25px;" href="">Forgot Password</a>
+                        </div>
+                        <button class="btn fs-montserrat-md text-white main-bg-color w-100" style="font-size: 12.25px; padding: 12px; border-radius: 10px" type="submit">Log In</button>
+                    </form>
+                    <div class="fs-montserrat-md" style="font-size: 12.25px">
+                        <p class="text-center">Don't have an account? <a href="{{ route('register') }}" class="text-decoration-none main-text-color">Sign Up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col p-0 m-0">
+            <div class="w-100 h-100" style="background-image: url('/images/loginBg.png'); background-position: center; background-size: cover; background-repeat: no-repeat"></div>
+        </div>
+    </div>
+</div>
