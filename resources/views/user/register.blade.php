@@ -10,13 +10,10 @@
                         <form action="{{ route('registerUser') }}" method="post" class="mb-3">
                             @csrf
 
-
-
-
                             {{-- Response Feedback --}}
                             @if (Session::has('success'))
                             <div class="alert alert-success" role="alert">
-                                {{ Session::get('failed') }}
+                                {{ Session::get('success') }}
                             </div>
                             @endif
                             @if (Session::has('failed'))
